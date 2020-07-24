@@ -1,0 +1,171 @@
+   <!DOCTYPE html>
+   <html>
+
+   <head>
+      <title>Shopping Cart</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+      <link href="style.css" rel="stylesheet">
+   </head>
+
+   <body>
+
+      <section>
+         <div class="container">
+            <div class="cart">
+
+               <div class="col-md-12 col-lg-10 mx-auto">
+
+                  <div class="cart-item">
+                     <div class="row">
+                        <div class="col-md-7 center-item">
+                           <img src="images/product-1.png" alt="">
+                           <h5>iPhone 11 128GB Black</h5>
+                        </div>
+
+                        <div class="col-md-5 center-item">
+                           <div class="input-group number-spinner">
+                              <button id="first-minus"class="btn btn-default"><i class="fas fa-minus"></i></button>
+                              <input type="text" id="mobileNum" class="form-control text-center" value="1">
+                              <button id="first-plus"class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           </div>
+                           <h5>$<span id="mobilePrice">1219</span></h5>
+                           <img src="images/remove.png" alt="" class="remove-item">
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="cart-item">
+                     <div class="row">
+                        <div class="col-md-7 center-item mx-auto">
+                           <img src="images/product-2.png" alt="">
+                           <h5>iPhone 11 Silicone Case - Black</h5>
+                        </div>
+                        <div class="col-md-5 center-item">
+                           <div class="input-group number-spinner">
+                              <button id="second-minus" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                              <input type="text"id="caseNum" class="form-control text-center" value="1">
+                              <button id="second-plus" class="btn btn-default"><i class="fas fa-plus"></i></button>
+
+                           </div>
+                           <h5>$<span id="casePrice">59</span></h5>
+                           <img src="images/remove.png" alt="" class="remove-item">
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="cart-item">
+                     <div class="row">
+
+                        <div class="col-md-8">
+                           <h5>Subtotal: </h5>
+                           <h5>Tax:</h5>
+                           <h5>Total:</h5>
+                        </div>
+
+                        <div class="col-md-4 status">
+                           <h5>$<span id="subTotal">1,278</span></h5>
+                           <h5>$<span id="tax">76</span></h5>
+                           <h5>$<span id="total">1341</span></h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-12 pt-4 pb-4">
+                     <button type="button" class="btn btn-success check-out">Check Out</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <script>
+         //first plus
+         document.getElementById("first-plus").addEventListener("click",function(){
+
+            const mobileNum =getInputNum("mobileNum",1);
+            document.getElementById("mobileNum").value=mobileNum;
+
+
+            const mobilePrice=currentPrice("mobilePrice",1219);
+            document.getElementById("mobilePrice").innerText=mobilePrice;
+
+            showVauchar();
+
+         })
+
+         //second plus
+         document.getElementById("second-plus").addEventListener("click",function(){
+
+            const caseNum =getInputNum("caseNum",1);
+            document.getElementById("caseNum").value=caseNum;
+
+            const casePrice=currentPrice("casePrice",59);
+            document.getElementById("casePrice").innerText=casePrice;
+
+            showVauchar();
+
+         })
+         //first minus
+         document.getElementById("first-minus").addEventListener("click",function(){
+            const mobileNumMinus1 =getInputNum("mobileNum",-1);
+            document.getElementById("mobileNum").value=mobileNumMinus1;
+
+            const casePrice1=currentPrice("mobilePrice",-1219);
+            document.getElementById("mobilePrice").innerText=casePrice1;
+
+            showVauchar();
+
+         })
+         //second minus
+         document.getElementById("second-minus").addEventListener("click",function(){
+            const caseNumMinus2 =getInputNum("caseNum",-1);
+            document.getElementById("caseNum").value=caseNumMinus2;
+
+            const casePrice=currentPrice("casePrice",-59);
+            document.getElementById("casePrice").innerText=casePrice;
+
+            showVauchar();
+
+         })
+
+
+         function getInputNum(id,add){
+
+            const num=document.getElementById(id).value;
+            const currentNum=parseFloat(num);
+         
+            const total=currentNum+add;
+            if(total<0){
+               return 0;
+            }
+            else{
+               return total;
+            }
+         
+         } 
+         function currentPrice(id,differ){
+            const price=document.getElementById(id).innerText;
+            const floatPrice=parseFloat(price);
+            const priceMobile=floatPrice+differ;
+            if(differ==-1219 && priceMobile<1219){
+               return 0;
+            }
+            else if(differ==-59 && priceMobile<59){
+               return 0;
+            }
+            else 
+            return priceMobile;
+         }
+         function showVauchar(){
+            const subTotal=parseFloat(document.getElementById('mobilePrice').innerText)+parseFloat(document.getElementById('casePrice').innerText);
+            document.getElementById('subTotal').innerText=subTotal;
+            var tax= document.getElementById('tax').innerText=Math.floor(subTotal*0.06);
+            document.getElementById('total').innerText=subTotal+tax;
+      }
+
+      </script>
+
+   </body>
+
+   </html>
